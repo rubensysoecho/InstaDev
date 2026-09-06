@@ -28,19 +28,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.instadev.R
 import com.example.instadev.R.drawable
+import com.example.instadev.view.core.components.InstaText
 
 @Preview
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
-    /*var email: String by remember { mutableStateOf("") }
-    var password: String by remember { mutableStateOf("") }
-    */
+fun LoginScreen(loginViewModel: LoginViewModel = hiltViewModel()) {
     val uiState: LoginUIState by loginViewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold() { padding ->
@@ -52,11 +52,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                 .padding(horizontal = 24.dp)
                 .fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                modifier = Modifier.padding(top = 24.dp),
-                text = "Español (España)",
-                color = MaterialTheme.colorScheme.onBackground
-            )
+            InstaText(text = stringResource(R.string.login_screen_header_spa), modifier = Modifier.padding(top = 24.dp))
             Spacer(Modifier.weight(1f))
             Image(
                 modifier = Modifier.size(125.dp),
@@ -67,14 +63,22 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(percent = 25),
-                label = { Text(color = MaterialTheme.colorScheme.onBackground, text = "Usuario, correo electronico o movil") },
+                label = {
+                    InstaText(
+                        text = stringResource(R.string.login_screen_body_form_mail_spa)
+                    )
+                },
                 value = uiState.email,
                 onValueChange = { loginViewModel.onEmailChanged(it) })
             Spacer(Modifier.height(12.dp))
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(percent = 25),
-                label = { Text(color = MaterialTheme.colorScheme.onBackground, text = "Contraseña") },
+                label = {
+                    InstaText(
+                        text = stringResource(R.string.login_screen_body_form_passwd_spa)
+                    )
+                },
                 value = uiState.password,
                 onValueChange = { loginViewModel.onPasswordChanged(it) })
 
@@ -82,21 +86,33 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                shape = MaterialTheme.shapes.large,
                 enabled = uiState.isLoginEnabled,
                 onClick = {}) {
-                Text(
+                InstaText(
                     color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(vertical = 4.dp),
-                    text = "Iniciar sesion"
+                    text = stringResource(R.string.login_screen_body_btn_login_spa)
                 )
             }
-            TextButton(onClick = {}) { Text("¿Has olvidado la contraseña?", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = {}) {
+                InstaText(
+                    text = stringResource(R.string.login_screen_body_passwd_forgot_spa),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
             Spacer(Modifier.weight(1.3f))
 
             OutlinedButton(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
                 modifier = Modifier.fillMaxWidth(),
-                onClick = {}) { Text(color = MaterialTheme.colorScheme.primary, text = "Crear cuenta nueva") }
+                onClick = {}) {
+                Text(
+                    color = MaterialTheme.colorScheme.primary,
+                    text = stringResource(R.string.login_screen_footer_btn_register_spa)
+                )
+            }
             Spacer(Modifier.height(12.dp))
         }
     }

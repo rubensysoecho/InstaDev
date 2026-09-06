@@ -1,6 +1,5 @@
 package com.example.instadev.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -57,6 +56,7 @@ fun InstaDevTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        shapes = shapes,
         typography = Typography,
         content = content
     )
